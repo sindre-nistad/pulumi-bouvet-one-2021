@@ -3,6 +3,7 @@ import * as resources from '@pulumi/azure-native/resources'
 import * as storage from '@pulumi/azure-native/storage'
 import * as asset from '@pulumi/pulumi/asset'
 import { convertSlides } from './utils'
+const fs = require('fs')
 
 const stackName = pulumi.getStack()
 
@@ -29,6 +30,32 @@ const container = new storage.BlobContainer(
     containerName: 'presentation'
   }
 )
+
+const uploadFile = async (path: string, contentType?: string): Promise<storage.Blob> => new storage.Blob(path, {
+  resourceGroupName: resourceGroup.name,
+  accountName: storageAccount.name,
+  source: new asset.StringAsset(await fs.readFileSync(path)),
+  containerName: container.name,
+  blobName: path,
+  contentType: contentType
+})
+
+// Upload files required by reveal.js
+// For some reason, they are not bundled, when compiling the AsciDoc
+const tobeUploaded: string[] = []
+const glob = require('glob')
+;['css', 'js', 'lib', 'plugin'].forEach(folder => {
+  glob(`node_modules/reveal.js/${folder}/**/*.+(js|css|woff)`, async (err: any, files: string[]) => {
+    // console.log(err)
+    if (err) return
+    // console.log(files)
+
+    await Promise.all(files.map(file => uploadFile(file)))
+    tobeUploaded.push(...files)
+  })
+  // return fs.readdirSync(`node_modules/reveal.js/${folder}`, {
+  // }).map((file: string) => uploadFile(file))
+})
 
 const presentationBlob = new storage.Blob('content', {
   resourceGroupName: resourceGroup.name,

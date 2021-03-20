@@ -1,8 +1,8 @@
 import * as pulumi from '@pulumi/pulumi'
 import * as resources from '@pulumi/azure-native/resources'
 import * as storage from '@pulumi/azure-native/storage'
+import * as containerRegistry from '@pulumi/azure-native/containerregistry'
 import * as asset from '@pulumi/pulumi/asset'
-import { convertSlides } from './utils'
 const fs = require('fs')
 
 const stackName = pulumi.getStack()
@@ -31,37 +31,29 @@ const container = new storage.BlobContainer(
   }
 )
 
-const uploadFile = async (path: string, contentType?: string): Promise<storage.Blob> => new storage.Blob(path, {
-  resourceGroupName: resourceGroup.name,
-  accountName: storageAccount.name,
-  source: new asset.StringAsset(await fs.readFileSync(path)),
-  containerName: container.name,
-  blobName: path,
-  contentType: contentType
-})
+interface UploadProps {
+    path: string
+    blobName?: string
+    contentType?: string
+}
 
-// Upload files required by reveal.js
-// For some reason, they are not bundled, when compiling the AsciDoc
-const tobeUploaded: string[] = []
-const glob = require('glob')
-;['css', 'js', 'lib', 'plugin'].forEach(folder => {
-  glob(`node_modules/reveal.js/${folder}/**/*.+(js|css|woff)`, async (err: any, files: string[]) => {
-    // console.log(err)
-    if (err) return
-    // console.log(files)
-
-    await Promise.all(files.map(file => uploadFile(file)))
-    tobeUploaded.push(...files)
+function uploadFile ({
+  path,
+  contentType,
+  blobName
+}: UploadProps): storage.Blob {
+  return new storage.Blob(path, {
+    resourceGroupName: resourceGroup.name,
+    accountName: storageAccount.name,
+    source: new asset.StringAsset(fs.readFileSync(path).toString()),
+    containerName: container.name,
+    blobName: blobName || path,
+    contentType: contentType
   })
-  // return fs.readdirSync(`node_modules/reveal.js/${folder}`, {
-  // }).map((file: string) => uploadFile(file))
-})
+}
 
-const presentationBlob = new storage.Blob('content', {
-  resourceGroupName: resourceGroup.name,
-  accountName: storageAccount.name,
-  source: new asset.StringAsset(convertSlides()),
-  containerName: container.name,
+const presentationBlob = uploadFile({
+  path: 'presentation/index.html',
   blobName: 'index.html',
   contentType: 'text/html'
 })

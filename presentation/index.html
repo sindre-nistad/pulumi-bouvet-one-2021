@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css"
+          integrity="sha256-D+4fFDtnJGnOvyw3MKsmzNiTFHR7IY1mLz6vXv9Tr8A="
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/sky.css"
+          integrity="sha256-xIXpqJGBYsiPywn+cXI7Bo9MEzMaKsOWcnN80wSH1Y4="
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.6.0/build/styles/darcula.min.css"
+          integrity="sha256-5BRDJ9LsMByOdNbohiNu+sxguR70wTsnt20w6GAZvlU="
+          crossorigin="anonymous">
+    <title>Infrastruktur som Kode</title>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section data-markdown>
+            <script type="text/template">
+                ## Pulumi
+                Infrastruktur som <em>vassekte</em> kode
+
+                - men bruker Terraform i bunn <!-- .element: class="fragment" data-fragment-index="1" -->
+            </script>
+
+
+        </section>
+
+        <section>
+            Next slide
+        </section>
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/markdown/markdown.js"
+        integrity="sha256-pvU9HUJXXpWUBE4Y4JAC2YWppQudf7JQ3l+mqrDLHs0="
+        crossorigin="anonymous"
+></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"
+        integrity="sha256-s8DpBsdAq/7MqaKQWfVU5A1+Chx9VdTz6hgpyXpgR6Y="
+        crossorigin="anonymous"
+></script>
+<script type="module">
+    import Reveal from 'https://esm.run/reveal.js@4.1.0'
+
+    Reveal.initialize({
+        plugins: [RevealMarkdown, RevealHighlight],
+        markdown: {
+            smartypants: true,
+            gfm: true,
+        },
+    }).then(() => console.log('It WORKS!'))
+</script>
+</body>
+</html>

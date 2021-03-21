@@ -11,14 +11,14 @@ const resourceGroup = new resources.ResourceGroup(`BouvetOne-${stackName}`)
 
 const defaultOptions = {
   resourceGroupName: resourceGroup.name,
-  location: 'norwayeast'
+  location: 'northeurope'
 }
 
 // Create an Azure resource (Storage Account)
 const storageAccount = new storage.StorageAccount('sa', {
   ...defaultOptions,
   sku: {
-    name: storage.SkuName.Standard_LRS
+    name: storage.SkuName.Standard_RAGZRS
   },
   kind: storage.Kind.StorageV2,
   enableHttpsTrafficOnly: true,

@@ -1,7 +1,6 @@
 import * as pulumi from '@pulumi/pulumi'
 import * as resources from '@pulumi/azure-native/resources'
 import * as storage from '@pulumi/azure-native/storage'
-import * as containerRegistry from '@pulumi/azure-native/containerregistry'
 import * as asset from '@pulumi/pulumi/asset'
 const fs = require('fs')
 
@@ -10,9 +9,14 @@ const stackName = pulumi.getStack()
 // Create an Azure Resource Group
 const resourceGroup = new resources.ResourceGroup(`BouvetOne-${stackName}`)
 
+const defaultOptions = {
+  resourceGroupName: resourceGroup.name,
+  location: 'norwayeast'
+}
+
 // Create an Azure resource (Storage Account)
 const storageAccount = new storage.StorageAccount('sa', {
-  resourceGroupName: resourceGroup.name,
+  ...defaultOptions,
   sku: {
     name: storage.SkuName.Standard_LRS
   },
@@ -24,7 +28,7 @@ const storageAccount = new storage.StorageAccount('sa', {
 const container = new storage.BlobContainer(
   'presentation',
   {
-    resourceGroupName: resourceGroup.name,
+    ...defaultOptions,
     accountName: storageAccount.name,
     publicAccess: 'Container',
     containerName: 'presentation'
@@ -43,7 +47,7 @@ function uploadFile ({
   blobName
 }: UploadProps): storage.Blob {
   return new storage.Blob(path, {
-    resourceGroupName: resourceGroup.name,
+    ...defaultOptions,
     accountName: storageAccount.name,
     source: new asset.StringAsset(fs.readFileSync(path).toString()),
     containerName: container.name,

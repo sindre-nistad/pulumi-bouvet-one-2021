@@ -35,29 +35,12 @@ const container = new storage.BlobContainer(
   }
 )
 
-interface UploadProps {
-    path: string
-    blobName?: string
-    contentType?: string
-}
-
-function uploadFile ({
-  path,
-  contentType,
-  blobName
-}: UploadProps): storage.Blob {
-  return new storage.Blob(path, {
-    ...defaultOptions,
-    accountName: storageAccount.name,
-    source: new asset.StringAsset(fs.readFileSync(path).toString()),
-    containerName: container.name,
-    blobName: blobName || path,
-    contentType: contentType
-  })
-}
-
-const presentationBlob = uploadFile({
-  path: 'presentation/index.html',
+const path = 'presentation/index.html'
+const presentationBlob = new storage.Blob(path, {
+  ...defaultOptions,
+  accountName: storageAccount.name,
+  source: new asset.StringAsset(fs.readFileSync(path).toString()),
+  containerName: container.name,
   blobName: 'index.html',
   contentType: 'text/html'
 })

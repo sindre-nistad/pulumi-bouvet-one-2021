@@ -12,37 +12,39 @@
           href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.6.0/build/styles/darcula.min.css"
           integrity="sha256-5BRDJ9LsMByOdNbohiNu+sxguR70wTsnt20w6GAZvlU="
           crossorigin="anonymous">
-    <title>Infrastruktur som Kode</title>
+    <title>Infrastructure as code</title>
 </head>
 <body>
 <div class="reveal">
     <div class="slides">
         <section>
             <h2>Pulumi</h2>
-            <p>Infrastruktur som <em>vassekte</em> kode</p>
-            <p class="fragment">Som betyr at vi kan ta i bruk <em>hele</em> det tilgjengelige økosystemet</p>
-            <p class="fragment">inkludert muligheter for avlusing</p>
+            <p>Infrastructure as <em>real</em> code</p>
+            <p class="fragment">Which means, we may use the <em>entire</em> ecosystem for a given language</p>
+            <p class="fragment">including the possibility of debugging</p>
         </section>
         <section>
             <h2>Pulumi</h2>
-            <p class="fragment">kompilerer koden til <a href="https://terraform.io">Terraform</a> (og krypterer hemmeligheter)</p>
-            <p class="fragment">Imperativt, i motsettning til Terraforms deklarative (domenespesifikke) språk</p>
+            <p class="fragment">compiles the code to <a href="https://terraform.io">Terraform</a> (and encrypts secrets*)</p>
+            <p class="fragment">Imperative, unlike Terraform's declarative (domain specific) language</p>
         </section>
         <section>
-            <h2>Erfaringer</h2>
-            <p class="fragment">👍 Trenger ikke lære et nytt (konfigurasjons)språk</p>
-            <p class="fragment">👍 Kan bruke eksisterende moduler og biblioteker</p>
-            <p class="fragment">👍 Støtte for <a href="https://www.pulumi.com/docs/guides/testing/unit/">enhts tester</a></p>
-            <p class="fragment">👍 Støtter <em>mange</em> skylevrandører</p>
+            <h2>Experiences</h2>
+            <p class="fragment">👍 There is no need to learn a new (configuration) language</p>
+            <p class="fragment">👍 You can use existing modules, and libraries</p>
+            <p class="fragment">👍 Support for <a href="https://www.pulumi.com/docs/guides/testing/unit/">unit tests</a></p>
+            <p class="fragment">👍 Supports <em>many</em> cloud providers</p>
             </section>
         <section>
-            <h2>Erfaringer</h2>
-            <p class="fragment">👎 Tett knyttet til API-et til de forskellige skylevrandørende</p>
-            <p class="fragment fade-right">Kan delvis løses ved å bruke <a href="https://www.pulumi.com/docs/reference/pkg/nodejs/pulumi/cloud">@pulumi/cloud</a></p>
-            <p class="fragment">👎 Får få, eller ingen standardverdier når en oppretter resurser</p>
+            <h2>Experiences</h2>
+            <p class="fragment">👎 Need to learn a new framework</p>
+            <p class="fragment">👎 Closely coupled to the different cloud provider's APIs</p>
+            <p class="fragment fade-right">
+                Which can be alleviated by using <a href="https://www.pulumi.com/docs/reference/pkg/nodejs/pulumi/cloud">@pulumi/cloud</a></p>
+            <p class="fragment">👎 There are few, and sometimes no default values for creating resources</p>
 
             <aside class="notes">
-                Har brukt Azure portalen til utforskning / for å finne ut hvilke resurser som er nødvendig før jeg gjør det tilsvarende i Pulumi
+                I've used the Azure portal for exploration / figuring out which resources are necessary to create a given resource in Pulumi
             </aside>
         </section>
     </div>

@@ -7,11 +7,13 @@ const fs = require('fs')
 const stackName = pulumi.getStack()
 
 // Create an Azure Resource Group
-const resourceGroup = new resources.ResourceGroup(`BouvetOne-${stackName}`)
+const resourceGroup = new resources.ResourceGroup(`BouvetOne-${stackName}`,
+  {
+    location: 'North Europe'
+  })
 
 const defaultOptions = {
-  resourceGroupName: resourceGroup.name,
-  location: 'northeurope'
+  resourceGroupName: resourceGroup.name
 }
 
 // Create an Azure resource (Storage Account)
@@ -35,14 +37,18 @@ const container = new storage.BlobContainer(
   }
 )
 
-const path = 'presentation/index.html'
-const presentationBlob = new storage.Blob(path, {
-  ...defaultOptions,
-  accountName: storageAccount.name,
-  source: new asset.StringAsset(fs.readFileSync(path).toString()),
-  containerName: container.name,
-  blobName: 'index.html',
-  contentType: 'text/html'
+const blobs = ['no', 'en'].map(language => {
+  const path = `presentation/index.${language}.html`
+
+  return new storage.Blob(path, {
+    ...defaultOptions,
+    accountName: storageAccount.name,
+    source: new asset.StringAsset(fs.readFileSync(path).toString()),
+    containerName: container.name,
+    blobName: `index.${language}.html`,
+    contentType: 'text/html'
+  })
 })
 
-export const URL = presentationBlob.url.apply(url => url)
+export const URL_NO = blobs[0].url
+export const URL_EN = blobs[1].url

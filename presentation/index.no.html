@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/reveal.css"
+          integrity="sha256-D+4fFDtnJGnOvyw3MKsmzNiTFHR7IY1mLz6vXv9Tr8A="
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/dist/theme/sky.css"
+          integrity="sha256-xIXpqJGBYsiPywn+cXI7Bo9MEzMaKsOWcnN80wSH1Y4="
+          crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.6.0/build/styles/darcula.min.css"
+          integrity="sha256-5BRDJ9LsMByOdNbohiNu+sxguR70wTsnt20w6GAZvlU="
+          crossorigin="anonymous">
+    <title>Infrastruktur som Kode</title>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+        <section>
+            <h2>Pulumi</h2>
+            <p>Infrastruktur som <em>vassekte</em> kode</p>
+            <p class="fragment">Som betyr at vi kan ta i bruk <em>hele</em> det tilgjengelige økosystemet</p>
+            <p class="fragment">inkludert muligheter for avlusing</p>
+        </section>
+        <section>
+            <h2>Pulumi</h2>
+            <p class="fragment">kompilerer koden til <a href="https://terraform.io">Terraform</a> (og krypterer hemmeligheter)</p>
+            <p class="fragment">Imperativt, i motsettning til Terraforms deklarative (domenespesifikke) språk</p>
+        </section>
+        <section>
+            <h2>Erfaringer</h2>
+            <p class="fragment">👍 Trenger ikke lære et nytt (konfigurasjons)språk</p>
+            <p class="fragment">👍 Kan bruke eksisterende moduler og biblioteker</p>
+            <p class="fragment">👍 Støtte for <a href="https://www.pulumi.com/docs/guides/testing/unit/">enhetstester</a></p>
+            <p class="fragment">👍 Støtter <em>mange</em> skylevrandører</p>
+            </section>
+        <section>
+            <h2>Erfaringer</h2>
+            <p class="fragment">👎 Må lære et nytt rammeverk</p>
+            <p class="fragment">👎 Tett knyttet til API-et til de forskellige skylevrandørende</p>
+            <p class="fragment fade-right">Kan delvis løses ved å bruke <a href="https://www.pulumi.com/docs/reference/pkg/nodejs/pulumi/cloud">@pulumi/cloud</a></p>
+            <p class="fragment">👎 Får få, eller ingen standardverdier når en oppretter resurser</p>
+
+            <aside class="notes">
+                Har brukt Azure portalen til utforskning / for å finne ut hvilke resurser som er nødvendig før jeg gjør det tilsvarende i Pulumi
+            </aside>
+        </section>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/markdown/markdown.js"
+        integrity="sha256-pvU9HUJXXpWUBE4Y4JAC2YWppQudf7JQ3l+mqrDLHs0="
+        crossorigin="anonymous"
+></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/highlight/highlight.js"
+        integrity="sha256-s8DpBsdAq/7MqaKQWfVU5A1+Chx9VdTz6hgpyXpgR6Y="
+        crossorigin="anonymous"
+></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.1.0/plugin/notes/notes.js" integrity="sha256-cONk+UhbAnV5AgFsWuX7nhF0jgqrBWXra06yETJAgg0=" crossorigin="anonymous"></script>
+<script type="module">
+    import Reveal from 'https://esm.run/reveal.js@4.1.0'
+
+    Reveal.initialize({
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+        markdown: {
+            smartypants: true,
+            gfm: true,
+        },
+        hash: true,
+    })
+</script>
+</body>
+</html>

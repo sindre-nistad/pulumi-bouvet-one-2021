@@ -13,8 +13,8 @@
         "lint-staged": "^10.5.4"
     },
     "dependencies": {
-        "@pulumi/pulumi": "^2.0.0",
-        "@pulumi/azure-native": "^0.7.0"
+        "@pulumi/pulumi": "^3.0.0",
+        "@pulumi/azure-native": "^1.1.0"
     },
     "scripts": {
         "prepare": "husky install"
